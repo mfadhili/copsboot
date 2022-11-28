@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!--Spring boot defaults-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--If dev or local profile is enabled log to console -->
+    <springProfile name="dev,local">
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <!--If staging or prod profile log to file-->
+    <springProfile name="staging,prod">
+        <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+</configuration>
