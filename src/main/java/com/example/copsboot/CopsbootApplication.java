@@ -9,14 +9,16 @@ import org.springframework.context.annotation.Bean;
 import java.util.UUID;
 
 @SpringBootApplication
-public class copsboot {
+public class CopsbootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(copsboot.class, args);
+		SpringApplication.run(CopsbootApplication.class, args);
 	}
 
+	//tag::unique-id-generator[]
 	@Bean
 	public UniqueIdGenerator<UUID> uniqueIdGenerator() {
 		return new InMemoryUniqueIdGenerator();
 	}
+	//end::unique-id-generator[]
 }

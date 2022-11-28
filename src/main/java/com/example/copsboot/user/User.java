@@ -1,16 +1,17 @@
 package com.example.copsboot.user;
 
-import com.example.orm.jpa.AbstractEntityId;
-import com.sun.istack.NotNull;
+import com.example.orm.jpa.AbstractEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
+import java.util.UUID;
 
+//tag::class-def[]
 @Entity
 @Table(name = "copsboot_user")
-public class User extends AbstractEntityId<UserId> {
-    @Id
-    private UserId id;
+public class User extends AbstractEntity<UserId> {
+//end::class-def[]
 
     private String email;
     private String password;
@@ -20,19 +21,18 @@ public class User extends AbstractEntityId<UserId> {
     @NotNull
     private Set<UserRole> roles;
 
-    public User() {
+    protected User() {
+
     }
 
-    //Constructor
+    //tag::constructor[]
     public User(UserId id, String email, String password, Set<UserRole> roles) {
         super(id);
         this.email = email;
         this.password = password;
         this.roles = roles;
     }
-
-
-    //Getters
+    //end::constructor[]
 
     public String getEmail() {
         return email;

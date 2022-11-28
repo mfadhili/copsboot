@@ -2,23 +2,34 @@ package com.example.orm.jpa;
 
 import com.example.util.ArtifactForFramework;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.MappedSuperclass;
-import java.io.Serializable;
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * Abstract super class for entities. We are assuming that early primary key
+ * generation will be used.
+ *
+ * @param <T> the type of {@link EntityId} that will be used for this entity
+ */
 @MappedSuperclass
-public abstract class AbstractEntityId<T extends Serializable> implements Serializable, EntityId<T> {
+public abstract class AbstractEntity<T extends EntityId> implements Entity<T> {
+
+    @EmbeddedId
     private T id;
 
+
     @ArtifactForFramework
-    protected AbstractEntityId() {
+    protected AbstractEntity() {
     }
 
-    protected AbstractEntityId(T id) {
-        this.id = Objects.requireNonNull(id);
+    public AbstractEntity(T id) {
+        this.id = checkNotNull(id);
     }
+
 
     @Override
     public T getId() {
@@ -26,18 +37,13 @@ public abstract class AbstractEntityId<T extends Serializable> implements Serial
     }
 
     @Override
-    public String asString() {
-        return id.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object obj) {
         boolean result = false;
 
-        if (this == o) {
+        if (this == obj) {
             result = true;
-        } else if (o instanceof AbstractEntityId) {
-            AbstractEntityId other = (AbstractEntityId) o;
+        } else if (obj instanceof AbstractEntity) {
+            AbstractEntity other = (AbstractEntity) obj;
             result = Objects.equals(id, other.id);
         }
 
